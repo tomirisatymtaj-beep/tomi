@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Можно или нельзя? Безопасность за компьютером</title>
+
+<!-- Цифровой стиль -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+body {
+  font-family: 'Orbitron', Arial, sans-serif;
+  background: radial-gradient(circle at center, #0f2027, #203a43, #2c5364);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  color: #00fff7;
+}
+
+.container {
+  background: rgba(0,0,0,0.8);
+  padding: 35px;
+  border-radius: 20px;
+  box-shadow: 0 0 25px #00fff7, inset 0 0 15px #00fff7;
+  text-align: center;
+  max-width: 750px;
+  width: 90%;
+  border: 2px solid #00fff7;
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px #00fff7;
+}
+
+.question {
+  font-size: 28px;
+  margin: 30px 0;
+  min-height: 80px;
+  padding: 15px;
+  border: 1px solid #00fff7;
+  border-radius: 12px;
+  box-shadow: inset 0 0 10px #00fff7;
+}
+
+.buttons {
+  margin: 20px 0;
+}
+
+button {
+  font-family: 'Orbitron', Arial, sans-serif;
+  font-size: 22px;
+  padding: 15px 35px;
+  margin: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 15px white;
+}
+
+.can {
+  background: linear-gradient(45deg, #00ff87, #60efff);
+  color: black;
+}
+
+.cannot {
+  background: linear-gradient(45deg, #ff0844, #ffb199);
+  color: black;
+}
+
+.start {
+  background: linear-gradient(45deg, #00fff7, #007cf0);
+  color: black;
+}
+
+.feedback {
+  font-size: 24px;
+  height: 35px;
+  margin-top: 15px;
+  text-shadow: 0 0 10px white;
+}
+
+.score {
+  font-size: 26px;
+  margin-top: 15px;
+  font-weight: bold;
+  text-shadow: 0 0 10px #00fff7;
+}
+
+.hidden {
+  display: none;
+}
+
+/* анимация пульсации */
+.container {
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 15px #00fff7; }
+  to { box-shadow: 0 0 35px #00fff7; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🖥️ DIGITAL SAFETY GAME</h1>
+  <div class="question" id="question">Нажмите «СТАРТ»</div>
+  
+  <div id="buttons" class="buttons hidden">
+    <button class="can" onclick="checkAnswer('can')">🟢 МОЖНО</button>
+    <button class="cannot" onclick="checkAnswer('cannot')">🔴 НЕЛЬЗЯ</button>
+  </div>
+
+  <div class="feedback" id="feedback"></div>
+  <div class="score" id="score">БАЛЛЫ: 0</div>
+
+  <button class="start" onclick="startGame()">🚀 СТАРТ</button>
+</div>
+
+<script>
+
+const questions = [
+  { text: "Сидеть прямо за компьютером", answer: "can" },
+  { text: "Сидеть близко к экрану", answer: "cannot" },
+  { text: "Делать перерыв каждые 20 минут", answer: "can" },
+  { text: "Работать без отдыха долгое время", answer: "cannot" },
+  { text: "Делать зарядку для глаз", answer: "can" },
+  { text: "Есть за компьютером", answer: "cannot" },
+  { text: "Сидеть с прямой спиной", answer: "can" },
+  { text: "Работать с мокрыми руками", answer: "cannot" },
+  { text: "Держать расстояние до экрана", answer: "can" },
+  { text: "Смотреть на экран лёжа", answer: "cannot" }
+];
+
+let index = 0;
+let score = 0;
+
+function startGame() {
+  index = 0;
+  score = 0;
+  document.getElementById("buttons").classList.remove("hidden");
+  document.getElementById("score").innerText = "БАЛЛЫ: " + score;
+  showQuestion();
+}
+
+function showQuestion() {
+  if (index < questions.length) {
+    document.getElementById("question").innerText = questions[index].text;
+    document.getElementById("feedback").innerText = "";
+  } else {
+    document.getElementById("question").innerText = "ИГРА ЗАВЕРШЕНА";
+    document.getElementById("feedback").innerText = "РЕЗУЛЬТАТ: " + score + " / " + questions.length;
+    document.getElementById("buttons").classList.add("hidden");
+  }
+}
+
+function checkAnswer(userAnswer) {
+  if (userAnswer === questions[index].answer) {
+    document.getElementById("feedback").innerText = "✅ ПРАВИЛЬНО";
+    score++;
+  } else {
+    document.getElementById("feedback").innerText = "❌ НЕПРАВИЛЬНО";
+  }
+
+  document.getElementById("score").innerText = "БАЛЛЫ: " + score;
+  index++;
+  setTimeout(showQuestion, 1000);
+}
+
+</script>
+
+</body>
+</html>
